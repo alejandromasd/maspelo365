@@ -1,7 +1,7 @@
 import { Component, HostListener } from "@angular/core";
 
 @Component({
-  selector: "maison-floating-scrollbar",
+  selector: "maspelo-floating-scrollbar",
   standalone: true,
   templateUrl: "./floating-scrollbar.component.html",
   styleUrl: "./floating-scrollbar.component.css",

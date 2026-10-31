@@ -2,7 +2,7 @@ import { Component, Input } from "@angular/core";
 import { RouterLink } from "@angular/router";
 
 @Component({
-  selector: "maison-site-header",
+  selector: "maspelo-site-header",
   standalone: true,
   imports: [RouterLink],
   templateUrl: "./site-header.component.html",

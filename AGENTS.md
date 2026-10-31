@@ -1,4 +1,4 @@
-# Maison del cabello
+# Maspelo365
 
 Angular 22 standalone application using Tailwind CSS v4.
 

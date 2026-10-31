@@ -35,7 +35,7 @@ jobs:
 
       - uses: actions/upload-pages-artifact@v5
         with:
-          path: ./dist/maison-del-cabello/browser
+          path: ./dist/maspelo365/browser
 
       - name: Deploy
         id: deployment

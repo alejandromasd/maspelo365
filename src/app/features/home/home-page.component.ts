@@ -4,7 +4,7 @@ import { PRODUCT_REPOSITORY } from "../../core/domain/product.repository";
 import { SiteHeaderComponent } from "../../shared/ui/site-header.component";
 
 @Component({
-  selector: "maison-home-page",
+  selector: "maspelo-home-page",
   standalone: true,
   imports: [RouterLink, SiteHeaderComponent],
   templateUrl: "./home-page.component.html",
