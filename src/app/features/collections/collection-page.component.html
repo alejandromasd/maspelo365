@@ -1,0 +1,31 @@
+<main class="collection-page min-h-screen bg-[#faf9f6] text-[#28231f]">
+  <maspelo-site-header [activeSection]="section.navLabel" />
+  <section class="collection-hero mx-auto grid max-w-[1440px] bg-[#ebe4da] lg:grid-cols-[1fr_0.9fr]">
+    <div class="flex flex-col justify-center px-6 py-14 sm:px-12 sm:py-20 lg:px-[7vw]">
+      <div class="mb-8 text-[9px] font-medium uppercase tracking-[0.18em] text-[#82776e]"><a routerLink="/" class="hover:text-[#9a7452]">Inicio</a><span class="px-2">/</span><span>{{ section.navLabel }}</span></div>
+      <p class="mb-5 flex items-center gap-3 text-[10px] font-semibold uppercase tracking-[0.28em] text-[#87684d] sm:text-xs"><span class="h-px w-8 bg-[#87684d]"></span>{{ section.eyebrow }}</p>
+      <h1 class="font-display max-w-2xl text-5xl leading-[0.98] tracking-[-0.05em] sm:text-6xl xl:text-7xl">{{ section.title }}</h1>
+      <p class="mt-6 max-w-xl text-sm leading-7 text-[#625952] sm:text-base">{{ section.description }}</p>
+      <a class="collection-cta mt-8 self-start" href="#productos">Descubrir la colección <svg viewBox="0 0 24 24"><path d="M5 12h13M14 7l5 5-5 5"/></svg></a>
+      <ul class="mt-10 grid gap-3 border-t border-black/15 pt-6 sm:grid-cols-3">
+        @for (highlight of section.highlights; track highlight) {
+          <li class="flex items-start gap-2 text-[10px] leading-5 text-[#625952]"><span class="mt-2 h-1 w-1 shrink-0 rounded-full bg-[#9a7452]"></span>{{ highlight }}</li>
+        }
+      </ul>
+    </div>
+    <div class="collection-hero-image relative min-h-[390px] overflow-hidden sm:min-h-[520px] lg:min-h-[650px]"><img [src]="section.image" [alt]="section.imageAlt"/><div class="absolute inset-0 bg-gradient-to-t from-black/25 via-transparent to-transparent"></div><span class="absolute bottom-7 left-7 font-display text-3xl italic text-white sm:bottom-10 sm:left-10">Maspelo365</span></div>
+  </section>
+
+  <section id="productos" class="mx-auto max-w-[1380px] px-5 py-16 sm:px-8 sm:py-24 lg:px-12">
+    <div class="mb-9 flex flex-col justify-between gap-6 md:flex-row md:items-end"><div><p class="mb-3 text-[10px] font-semibold uppercase tracking-[0.26em] text-[#9a7452]">Selección Maspelo365</p><h2 class="font-display text-4xl tracking-[-0.04em] sm:text-5xl">Encuentra tus favoritos</h2></div><label class="collection-search flex w-full md:max-w-[310px]"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="6.5"/><path d="m16 16 4 4"/></svg><input [(ngModel)]="search" placeholder="Buscar en la colección" aria-label="Buscar en la colección"/></label></div>
+    <div class="mb-6 flex flex-wrap items-center justify-between gap-4 border-y border-black/10 py-3"><div class="flex flex-wrap gap-2">@for (category of categoryOptions; track category) { <button class="category-pill" type="button" [class.is-selected]="selectedCategory === category" (click)="selectCategory(category)">{{ category }}</button> }</div><label class="flex items-center gap-2 text-[9px] font-semibold uppercase tracking-wider">Ordenar <select class="bg-transparent text-[10px] normal-case tracking-normal outline-none" [(ngModel)]="sort"><option>Recomendados</option><option>Precio: menor a mayor</option><option>Precio: mayor a menor</option></select></label></div>
+    <p class="mb-5 text-[10px] text-[#70675f]">{{ filteredProducts.length }} productos</p>
+    <div class="collection-grid">
+      @for (product of filteredProducts; track product.name) {
+        <article class="collection-card"><div class="collection-product-image"><img [src]="product.image" [alt]="product.name + ', ' + product.category" loading="lazy"/>@if (product.badge) { <span class="product-badge">{{ product.badge }}</span> }<button class="favorite-button" type="button" [class.is-active]="favorites.has(product.name)" [attr.aria-pressed]="favorites.has(product.name)" aria-label="Añadir a favoritos" (click)="toggleFavorite(product.name)"><svg viewBox="0 0 24 24"><path d="M20.8 5.8c-2.5-2.6-6.4-1.2-8.8 1.6C9.6 4.6 5.7 3.2 3.2 5.8.8 8.3 2 12.9 12 20c10-7.1 11.2-11.7 8.8-14.2Z"/></svg></button><button class="quick-add" type="button">Añadir a la cesta</button></div><div class="flex items-start justify-between gap-2 pt-4"><div class="min-w-0"><p class="mb-1 text-[8px] uppercase tracking-[0.12em] text-[#8b8179]">{{ product.category }}</p><h3 class="font-display text-2xl leading-tight">{{ product.name }}</h3><p class="mt-1 text-[10px] text-[#776f68]">{{ product.detail }}</p><div class="mt-2 flex items-center gap-2"><span class="text-[10px] tracking-widest text-[#9a7452]">★★★★★</span><span class="text-[9px] text-[#776f68]">{{ product.rating }}</span></div></div><div class="shrink-0 pt-5 text-right text-xs font-semibold">{{ product.price }} €</div></div></article>
+      }
+    </div>
+    @if (!filteredProducts.length) { <p class="py-16 text-center text-sm text-[#70675f]">No encontramos productos con esos filtros.</p> }
+  </section>
+  <section class="collection-advice bg-[#332c27] px-5 py-14 text-[#f5efe7] sm:px-8"><div class="mx-auto flex max-w-[1200px] flex-col items-start justify-between gap-6 sm:flex-row sm:items-center"><div><p class="mb-2 text-[9px] uppercase tracking-[0.22em] text-[#c4a889]">¿Necesitas una recomendación?</p><h2 class="font-display text-3xl sm:text-4xl">Estamos aquí para ayudarte a elegir.</h2></div><a routerLink="/asesoria" class="collection-cta collection-cta-light">Habla con una especialista <svg viewBox="0 0 24 24"><path d="M5 12h13M14 7l5 5-5 5"/></svg></a></div></section>
+</main>

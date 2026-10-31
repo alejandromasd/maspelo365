@@ -9,6 +9,14 @@ import { RouterLink } from "@angular/router";
   styleUrl: "./site-header.component.css",
 })
 export class SiteHeaderComponent {
-  @Input() isCatalog = false;
+  @Input() activeSection = "Inicio";
+  readonly navItems = [
+    { label: "Inicio", route: "/" },
+    { label: "Prótesis", route: "/protesis" },
+    { label: "Postizos", route: "/postizos" },
+    { label: "Cuidado", route: "/cuidado" },
+    { label: "Accesorios", route: "/accesorios" },
+    { label: "Asesoría", route: "/asesoria" },
+  ];
   menuOpen = false;
 }
