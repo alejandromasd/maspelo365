@@ -14,9 +14,9 @@ const CATALOG: readonly Product[] = [
 ];
 
 const FEATURED: readonly FeaturedProduct[] = [
-  { name: "Éclat", type: "Peluca de cabello natural", price: "289 €", image: "https://images.unsplash.com/photo-1625503337559-d3e99da12715?auto=format&fit=crop&w=900&q=86", tone: "Rubio arena" },
-  { name: "Sienna", type: "Lace front premium", price: "249 €", image: "https://images.unsplash.com/photo-1625503339883-6ddd78909177?auto=format&fit=crop&w=900&q=86", tone: "Castaño avellana" },
-  { name: "Amélie", type: "Peluca de cabello natural", price: "319 €", image: "https://images.unsplash.com/photo-1663475986058-a4a06c5f9b8e?auto=format&fit=crop&w=900&q=86", tone: "Moreno intenso" },
+  { name: "Éclat", category: "Peluca natural", detail: "Rubio arena", type: "Peluca de cabello natural", price: 289, image: "https://images.unsplash.com/photo-1625503337559-d3e99da12715?auto=format&fit=crop&w=900&q=86", tone: "Rubio arena", badge: "Bestseller", rating: "4.9", colors: ["#b58c68"] },
+  { name: "Sienna", category: "Peluca premium", detail: "Castaño avellana", type: "Lace front premium", price: 249, image: "https://images.unsplash.com/photo-1625503339883-6ddd78909177?auto=format&fit=crop&w=900&q=86", tone: "Castaño avellana", badge: "", rating: "4.8", colors: ["#76513e"] },
+  { name: "Amélie", category: "Peluca natural", detail: "Moreno intenso", type: "Peluca de cabello natural", price: 319, image: "https://images.unsplash.com/photo-1663475986058-a4a06c5f9b8e?auto=format&fit=crop&w=900&q=86", tone: "Moreno intenso", badge: "", rating: "4.9", colors: ["#30231d"] },
 ];
 
 const COLLECTION_PRODUCTS: readonly Product[] = [

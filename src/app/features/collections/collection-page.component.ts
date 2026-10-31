@@ -2,6 +2,7 @@ import { Component, Input, inject } from "@angular/core";
 import { FormsModule } from "@angular/forms";
 import { RouterLink } from "@angular/router";
 import { filterProducts } from "../../core/application/filter-products.use-case";
+import { CartService } from "../../core/application/cart.service";
 import { PRODUCT_REPOSITORY } from "../../core/domain/product.repository";
 import { Product, ProductSort } from "../../core/domain/product.model";
 import { SiteHeaderComponent } from "../../shared/ui/site-header.component";
@@ -18,6 +19,7 @@ export class CollectionPageComponent {
   @Input({ required: true }) section!: CollectionSection;
 
   private readonly repository = inject(PRODUCT_REPOSITORY);
+  readonly cart = inject(CartService);
   search = "";
   sort: ProductSort = "Recomendados";
   selectedCategory = "Todo";
@@ -48,5 +50,9 @@ export class CollectionPageComponent {
     const updated = new Set(this.favorites);
     updated.has(name) ? updated.delete(name) : updated.add(name);
     this.favorites = updated;
+  }
+
+  addToCart(product: Product): void {
+    this.cart.add(product);
   }
 }
