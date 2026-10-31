@@ -10,6 +10,8 @@ import {
 } from "@angular/core";
 import { RouterLink } from "@angular/router";
 import { CartService } from "../../core/application/cart.service";
+import { FavoritesService } from "../../core/application/favorites.service";
+import { Product } from "../../core/domain/product.model";
 
 @Component({
   selector: "maspelo-cart-drawer",
@@ -20,6 +22,8 @@ import { CartService } from "../../core/application/cart.service";
 })
 export class CartDrawerComponent {
   readonly cart = inject(CartService);
+  readonly favorites = inject(FavoritesService);
+  activeSection: "cart" | "favorites" = "cart";
   checkoutNotice = false;
   private readonly isBrowser = isPlatformBrowser(inject(PLATFORM_ID));
 
@@ -62,6 +66,11 @@ export class CartDrawerComponent {
 
   showCheckoutNotice(): void {
     this.checkoutNotice = true;
+  }
+
+  addFavoriteToCart(product: Product): void {
+    this.activeSection = "cart";
+    this.cart.add(product);
   }
 
   @HostListener("document:keydown.escape")
