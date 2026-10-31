@@ -1,6 +1,9 @@
 import { Component, inject } from "@angular/core";
 import { RouterLink } from "@angular/router";
 import { PRODUCT_REPOSITORY } from "../../core/domain/product.repository";
+import { Product } from "../../core/domain/product.model";
+import { CartService } from "../../core/application/cart.service";
+import { FavoritesService } from "../../core/application/favorites.service";
 import { SiteHeaderComponent } from "../../shared/ui/site-header.component";
 
 @Component({
@@ -12,10 +15,15 @@ import { SiteHeaderComponent } from "../../shared/ui/site-header.component";
 })
 export class HomePageComponent {
   private readonly repository = inject(PRODUCT_REPOSITORY);
+  readonly cart = inject(CartService);
+  readonly favorites = inject(FavoritesService);
   readonly featured = this.repository.getFeatured();
-  readonly favorites = new Set<number>();
 
-  toggleFavorite(index: number): void {
-    this.favorites.has(index) ? this.favorites.delete(index) : this.favorites.add(index);
+  toggleFavorite(product: Product): void {
+    this.favorites.toggle(product);
+  }
+
+  addToCart(product: Product): void {
+    this.cart.add(product);
   }
 }

@@ -10,11 +10,8 @@ export interface Product {
   readonly colors: readonly string[];
 }
 
-export interface FeaturedProduct {
-  readonly name: string;
+export interface FeaturedProduct extends Product {
   readonly type: string;
-  readonly price: string;
-  readonly image: string;
   readonly tone: string;
 }
 
