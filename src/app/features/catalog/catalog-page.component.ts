@@ -4,6 +4,8 @@ import { RouterLink } from "@angular/router";
 import { PRODUCT_REPOSITORY } from "../../core/domain/product.repository";
 import { Product, ProductSort } from "../../core/domain/product.model";
 import { filterProducts } from "../../core/application/filter-products.use-case";
+import { CartService } from "../../core/application/cart.service";
+import { FavoritesService } from "../../core/application/favorites.service";
 import { SiteHeaderComponent } from "../../shared/ui/site-header.component";
 
 @Component({
@@ -15,6 +17,8 @@ import { SiteHeaderComponent } from "../../shared/ui/site-header.component";
 })
 export class CatalogPageComponent {
   private readonly repository = inject(PRODUCT_REPOSITORY);
+  readonly cart = inject(CartService);
+  readonly favorites = inject(FavoritesService);
   readonly products = this.repository.getCatalog();
   readonly categoryPills = [
     { label: "Todo", values: [] },
@@ -29,7 +33,6 @@ export class CatalogPageComponent {
   sort: ProductSort = "Recomendados";
   selectedCategory = "Todo";
   selectedTypes = new Set<string>();
-  favorites = new Set<string>(["Aura Lace Front"]);
   openFilter = "";
   mobileFiltersOpen = false;
   visibleCount = 6;
@@ -64,15 +67,17 @@ export class CatalogPageComponent {
     this.openFilter = this.openFilter === filter ? "" : filter;
   }
 
-  toggleFavorite(name: string): void {
-    const updated = new Set(this.favorites);
-    updated.has(name) ? updated.delete(name) : updated.add(name);
-    this.favorites = updated;
+  toggleFavorite(product: Product): void {
+    this.favorites.toggle(product);
   }
 
   clearFilters(): void {
     this.selectedTypes = new Set();
     this.selectedCategory = "Todo";
     this.visibleCount = 6;
+  }
+
+  addToCart(product: Product): void {
+    this.cart.add(product);
   }
 }

@@ -1,0 +1,64 @@
+@if (cart.isOpen()) {
+  <div class="cart-layer">
+    <button class="cart-backdrop" type="button" aria-label="Cerrar cesta" (click)="close()"></button>
+    <aside #cartPanel class="cart-panel" role="dialog" aria-modal="true" aria-labelledby="cart-title" tabindex="-1">
+      <header class="cart-header"><div><p class="cart-eyebrow">Tu selección</p><h2 id="cart-title" class="font-display">Tu cesta <span>({{ cart.itemCount() }})</span></h2><span class="sr-only" aria-live="polite">@if (cart.lastAddedName()) { {{ cart.lastAddedName() }} añadido a la cesta }</span></div><button class="cart-close" type="button" aria-label="Cerrar cesta" (click)="close()"><svg viewBox="0 0 24 24"><path d="m6 6 12 12M18 6 6 18"/></svg></button></header>
+      <div class="cart-tabs" role="tablist" aria-label="Tu selección">
+        <button type="button" role="tab" [attr.aria-selected]="activeSection === 'cart'" [class.is-active]="activeSection === 'cart'" (click)="activeSection = 'cart'">Cesta <span>{{ cart.itemCount() }}</span></button>
+        <button type="button" role="tab" [attr.aria-selected]="activeSection === 'favorites'" [class.is-active]="activeSection === 'favorites'" (click)="activeSection = 'favorites'">Favoritos <span>{{ favorites.count() }}</span></button>
+      </div>
+      @if (activeSection === "cart") {
+      @if (cart.lines().length) {
+        <div class="shipping-note" aria-live="polite">
+          @if (cart.remainingForFreeShipping() > 0) {
+            <p>Te faltan <strong>{{ formatPrice(cart.remainingForFreeShipping()) }}</strong> para conseguir envío gratis.</p>
+          } @else {
+            <p><strong>¡Has conseguido el envío gratis!</strong></p>
+          }
+          <div class="shipping-track" role="progressbar" aria-label="Progreso para obtener envío gratis" [attr.aria-valuenow]="cart.shippingProgress()" aria-valuemin="0" aria-valuemax="100"><span [style.width.%]="cart.shippingProgress()"></span></div>
+        </div>
+        <div class="cart-lines" aria-live="polite">
+          @for (line of cart.lines(); track line.product.name) {
+            <article class="cart-line">
+              <img class="cart-product-image" [src]="line.product.image" [alt]="line.product.name"/>
+              <div class="cart-product-details"><p class="cart-product-category">{{ line.product.category }}</p><h3>{{ line.product.name }}</h3><p class="cart-product-detail">{{ line.product.detail }}</p><div class="cart-line-controls"><div class="quantity-control" [attr.aria-label]="'Cantidad de ' + line.product.name"><button type="button" [attr.aria-label]="'Quitar una unidad de ' + line.product.name" (click)="cart.decrease(line.product.name)">−</button><span aria-live="polite">{{ line.quantity }}</span><button type="button" [attr.aria-label]="'Añadir una unidad de ' + line.product.name" (click)="cart.increase(line.product.name)">+</button></div><button class="remove-line" type="button" [attr.aria-label]="'Eliminar ' + line.product.name + ' de la cesta'" (click)="cart.remove(line.product.name)">Eliminar</button></div></div>
+              <p class="cart-line-price">{{ formatPrice(line.product.price * line.quantity) }}</p>
+            </article>
+          }
+        </div>
+        <div class="cart-footer"><div class="cart-totals"><p><span>Subtotal</span><strong>{{ formatPrice(cart.subtotal()) }}</strong></p><p><span>Envío</span><strong>{{ cart.delivery() === 0 ? 'Gratis' : formatPrice(cart.delivery()) }}</strong></p><p class="cart-total"><span>Total estimado</span><strong>{{ formatPrice(cart.total()) }}</strong></p><small>Impuestos incluidos. El envío se calcula en el siguiente paso.</small></div><button class="checkout-button" type="button" (click)="showCheckoutNotice()">Continuar al pago <svg viewBox="0 0 24 24"><path d="M5 12h13M14 7l5 5-5 5"/></svg></button>@if (checkoutNotice) { <p class="checkout-notice" role="status">El proceso de pago estará disponible próximamente.</p> }<button class="continue-shopping" type="button" (click)="close()">Seguir explorando</button></div>
+      } @else {
+        <div class="cart-empty"><span class="empty-bag"><svg viewBox="0 0 24 24"><path d="M5.5 8.5h13l-1 12h-11l-1-12Z"/><path d="M9 9V6a3 3 0 0 1 6 0v3"/></svg></span><p class="cart-eyebrow">Aún no hay productos</p><h3 class="font-display">Tu próxima pieza favorita te espera.</h3><p>Explora las colecciones y guarda aquí lo que te guste.</p><a routerLink="/protesis" class="checkout-button" (click)="close()">Descubrir la colección <svg viewBox="0 0 24 24"><path d="M5 12h13M14 7l5 5-5 5"/></svg></a><div class="empty-links"><a routerLink="/postizos" (click)="close()">Postizos</a><a routerLink="/cuidado" (click)="close()">Cuidado</a><a routerLink="/accesorios" (click)="close()">Accesorios</a></div></div>
+      }
+      } @else {
+        @if (favorites.products().length) {
+          <div class="favorite-lines" aria-live="polite">
+            @for (product of favorites.products(); track product.name) {
+              <article class="favorite-line">
+                <img class="cart-product-image" [src]="product.image" [alt]="product.name" />
+                <div class="cart-product-details">
+                  <p class="cart-product-category">{{ product.category }}</p>
+                  <h3>{{ product.name }}</h3>
+                  <p class="cart-product-detail">{{ product.detail }}</p>
+                  <p class="favorite-price">{{ formatPrice(product.price) }}</p>
+                  <div class="favorite-actions">
+                    <button type="button" (click)="addFavoriteToCart(product)">Añadir a la cesta</button>
+                    <button type="button" [attr.aria-label]="'Quitar ' + product.name + ' de favoritos'" (click)="favorites.remove(product.name)">Quitar</button>
+                  </div>
+                </div>
+              </article>
+            }
+          </div>
+        } @else {
+          <div class="cart-empty favorites-empty">
+            <span class="empty-bag favorite-heart"><svg viewBox="0 0 24 24"><path d="M20.8 5.8c-2.5-2.6-6.4-1.2-8.8 1.6C9.6 4.6 5.7 3.2 3.2 5.8.8 8.3 2 12.9 12 20c10-7.1 11.2-11.7 8.8-14.2Z"/></svg></span>
+            <p class="cart-eyebrow">Tu lista personal</p>
+            <h3 class="font-display">Guarda aquí lo que te gusta.</h3>
+            <p>Pulsa el corazón de cualquier producto y lo encontrarás aquí cuando quieras volver a verlo.</p>
+            <button class="continue-shopping" type="button" (click)="close()">Seguir explorando</button>
+          </div>
+        }
+      }
+    </aside>
+  </div>
+}

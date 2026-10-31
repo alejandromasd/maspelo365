@@ -14,13 +14,32 @@ const CATALOG: readonly Product[] = [
 ];
 
 const FEATURED: readonly FeaturedProduct[] = [
-  { name: "Éclat", type: "Peluca de cabello natural", price: "289 €", image: "https://images.unsplash.com/photo-1625503337559-d3e99da12715?auto=format&fit=crop&w=900&q=86", tone: "Rubio arena" },
-  { name: "Sienna", type: "Lace front premium", price: "249 €", image: "https://images.unsplash.com/photo-1625503339883-6ddd78909177?auto=format&fit=crop&w=900&q=86", tone: "Castaño avellana" },
-  { name: "Amélie", type: "Peluca de cabello natural", price: "319 €", image: "https://images.unsplash.com/photo-1663475986058-a4a06c5f9b8e?auto=format&fit=crop&w=900&q=86", tone: "Moreno intenso" },
+  { name: "Éclat", category: "Peluca natural", detail: "Rubio arena", type: "Peluca de cabello natural", price: 289, image: "https://images.unsplash.com/photo-1625503337559-d3e99da12715?auto=format&fit=crop&w=900&q=86", tone: "Rubio arena", badge: "Bestseller", rating: "4.9", colors: ["#b58c68"] },
+  { name: "Sienna", category: "Peluca premium", detail: "Castaño avellana", type: "Lace front premium", price: 249, image: "https://images.unsplash.com/photo-1625503339883-6ddd78909177?auto=format&fit=crop&w=900&q=86", tone: "Castaño avellana", badge: "", rating: "4.8", colors: ["#76513e"] },
+  { name: "Amélie", category: "Peluca natural", detail: "Moreno intenso", type: "Peluca de cabello natural", price: 319, image: "https://images.unsplash.com/photo-1663475986058-a4a06c5f9b8e?auto=format&fit=crop&w=900&q=86", tone: "Moreno intenso", badge: "", rating: "4.9", colors: ["#30231d"] },
+];
+
+const COLLECTION_PRODUCTS: readonly Product[] = [
+  { name: "Soft Volume Clip-In", category: "Extensiones", detail: "Cabello natural · 45 cm", price: 189, image: "https://images.unsplash.com/photo-1595476108010-b4d1f102b1b1?auto=format&fit=crop&w=900&q=86", badge: "Más vendido", rating: "4.9", colors: ["#30231d", "#76513e", "#c69a72"] },
+  { name: "Flequillo Paris", category: "Postizo", detail: "Clip invisible · Fibra premium", price: 69, image: "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=900&q=86", badge: "Nuevo", rating: "4.7", colors: ["#211713", "#5d3c2c", "#a87957"] },
+  { name: "Ondas Atelier", category: "Extensiones", detail: "Pack de 3 piezas · 50 cm", price: 149, image: "https://images.unsplash.com/photo-1620331311520-246422fd82f9?auto=format&fit=crop&w=900&q=86", badge: "", rating: "4.8", colors: ["#30231d", "#76513e", "#c69a72"] },
+  { name: "Champú Delicado", category: "Cuidado", detail: "Limpieza suave · 250 ml", price: 24, image: "https://images.unsplash.com/photo-1608248543803-ba4f8c70ae0b?auto=format&fit=crop&w=900&q=86", badge: "", rating: "4.8", colors: [] },
+  { name: "Mascarilla Nutritiva", category: "Cuidado", detail: "Hidratación profunda · 200 ml", price: 32, image: "https://images.unsplash.com/photo-1601049541289-9b1b7bbbfe19?auto=format&fit=crop&w=900&q=86", badge: "Recomendado", rating: "4.9", colors: [] },
+  { name: "Spray Protector", category: "Cuidado", detail: "Protección térmica · 150 ml", price: 21, image: "https://images.unsplash.com/photo-1608571423902-eed4a5ad8108?auto=format&fit=crop&w=900&q=86", badge: "", rating: "4.6", colors: [] },
+  { name: "Cepillo Soft Touch", category: "Accesorios", detail: "Cerdas flexibles · Acabado madera", price: 28, image: "https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?auto=format&fit=crop&w=900&q=86", badge: "", rating: "4.8", colors: [] },
+  { name: "Turbante Siena", category: "Accesorios", detail: "Algodón suave · Talla única", price: 36, image: "https://images.unsplash.com/photo-1584917865442-de89df76afd3?auto=format&fit=crop&w=900&q=86", badge: "Nuevo", rating: "4.7", colors: ["#30231d", "#76513e", "#c69a72"] },
+  { name: "Soporte Elegance", category: "Accesorios", detail: "Expositor plegable · Metal mate", price: 19, image: "https://images.unsplash.com/photo-1523293182086-7651a899d37f?auto=format&fit=crop&w=900&q=86", badge: "", rating: "4.6", colors: [] },
+  { name: "Funda de Satén", category: "Accesorios", detail: "Protección nocturna · Satén", price: 16, image: "https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?auto=format&fit=crop&w=900&q=86", badge: "", rating: "4.8", colors: ["#30231d", "#76513e"] },
 ];
 
 @Injectable({ providedIn: "root" })
 export class StaticProductRepository implements ProductRepository {
   getCatalog(): readonly Product[] { return CATALOG; }
   getFeatured(): readonly FeaturedProduct[] { return FEATURED; }
+  getProductsForCategories(categories: readonly string[]): readonly Product[] {
+    const categorySet = new Set(categories);
+    return [...CATALOG, ...COLLECTION_PRODUCTS].filter((product) =>
+      categorySet.has(product.category),
+    );
+  }
 }
