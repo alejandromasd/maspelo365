@@ -1,0 +1,131 @@
+.hero-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 0.94fr) minmax(0, 1.06fr);
+}
+
+.hero-grid svg,
+.quick-add + svg {
+  width: 19px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.primary-button {
+  display: inline-flex;
+  min-height: 52px;
+  align-items: center;
+  gap: 22px;
+  background: #332c27;
+  padding: 0 24px;
+  color: #fff;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.17em;
+  text-transform: uppercase;
+  transition: background 200ms ease;
+}
+
+.primary-button:hover {
+  background: #9a7452;
+}
+
+.primary-button svg,
+#asesoria svg {
+  width: 18px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.5;
+}
+
+.text-link {
+  border-bottom: 1px solid #958271;
+  padding-bottom: 6px;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+}
+
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 22px;
+}
+
+.product-grid article:nth-child(2) {
+  margin-top: 54px;
+}
+
+.product-grid svg {
+  width: 17px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.4;
+}
+
+.favorite-home.is-active {
+  background: #3d3028;
+  color: #fff;
+}
+
+.favorite-home svg {
+  width: 17px;
+}
+
+.quick-add {
+  position: absolute;
+  right: 14px;
+  bottom: 14px;
+  left: 14px;
+  min-height: 48px;
+  background: rgba(247, 244, 238, 0.94);
+  color: #29231f;
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  opacity: 0;
+  transform: translateY(8px);
+  transition:
+    opacity 220ms ease,
+    transform 220ms ease,
+    background 180ms ease;
+}
+
+.group:hover .quick-add {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.quick-add:hover {
+  background: #fff;
+}
+
+@media (max-width: 1023px) {
+  .hero-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 639px) {
+  .product-grid {
+    grid-template-columns: 1fr;
+    gap: 48px;
+  }
+
+  .product-grid article:nth-child(2) {
+    margin-top: 0;
+  }
+
+  .product-grid article:nth-child(3) {
+    display: none;
+  }
+
+  .quick-add {
+    opacity: 1;
+    transform: none;
+  }
+}

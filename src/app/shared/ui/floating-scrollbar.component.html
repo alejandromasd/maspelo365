@@ -1,0 +1,1 @@
+@if (visible) { <div class="floating-scrollbar" [class.is-visible]="active" aria-hidden="true" (mouseenter)="active = true" (mouseleave)="active = false"><div class="floating-scrollbar__thumb" [style.height.px]="thumbHeight" [style.transform]="'translate3d(0, ' + thumbTop + 'px, 0)'" (pointerdown)="startDrag($event)"></div></div> }
