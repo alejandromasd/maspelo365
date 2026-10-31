@@ -7,7 +7,7 @@ import { filterProducts } from "../../core/application/filter-products.use-case"
 import { SiteHeaderComponent } from "../../shared/ui/site-header.component";
 
 @Component({
-  selector: "maison-catalog-page",
+  selector: "maspelo-catalog-page",
   standalone: true,
   imports: [FormsModule, RouterLink, SiteHeaderComponent],
   templateUrl: "./catalog-page.component.html",

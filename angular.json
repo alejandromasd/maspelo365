@@ -3,11 +3,11 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "maison-del-cabello": {
+    "maspelo365": {
       "projectType": "application",
       "root": "",
       "sourceRoot": "src",
-      "prefix": "maison",
+      "prefix": "maspelo",
       "architect": {
         "build": {
           "builder": "@angular/build:application",
@@ -18,7 +18,7 @@
             "inlineStyleLanguage": "css",
             "assets": [{ "glob": "**/*", "input": "public" }],
             "styles": ["src/index.css"],
-            "outputPath": "dist/maison-del-cabello"
+            "outputPath": "dist/maspelo365"
           },
           "configurations": {
             "production": {
@@ -39,8 +39,8 @@
         "serve": {
           "builder": "@angular/build:dev-server",
           "configurations": {
-            "production": { "buildTarget": "maison-del-cabello:build:production" },
-            "development": { "buildTarget": "maison-del-cabello:build:development" }
+            "production": { "buildTarget": "maspelo365:build:production" },
+            "development": { "buildTarget": "maspelo365:build:development" }
           },
           "defaultConfiguration": "development"
         }
