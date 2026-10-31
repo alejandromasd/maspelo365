@@ -3,7 +3,7 @@ import { RouterOutlet } from "@angular/router";
 import { FloatingScrollbarComponent } from "./shared/ui/floating-scrollbar.component";
 
 @Component({
-  selector: "maison-root",
+  selector: "maspelo-root",
   standalone: true,
   imports: [RouterOutlet, FloatingScrollbarComponent],
   templateUrl: "./app.component.html",
