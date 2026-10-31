@@ -53,7 +53,9 @@ export class CartDrawerComponent {
     this.checkoutNotice = false;
     if (this.isBrowser) {
       window.setTimeout(() => {
-        document.querySelector<HTMLElement>("[data-cart-trigger]")?.focus();
+        document.querySelector<HTMLElement>("[data-cart-trigger]")?.focus({
+          preventScroll: true,
+        });
       });
     }
   }

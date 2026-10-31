@@ -46,6 +46,14 @@ export class CollectionPageComponent {
     this.selectedCategory = category;
   }
 
+  scrollToProducts(event: Event): void {
+    event.preventDefault();
+    document.getElementById("productos")?.scrollIntoView({
+      behavior: "smooth",
+      block: "start",
+    });
+  }
+
   toggleFavorite(name: string): void {
     const updated = new Set(this.favorites);
     updated.has(name) ? updated.delete(name) : updated.add(name);
